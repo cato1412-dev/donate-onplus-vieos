@@ -3,7 +3,7 @@ const donateData = [
     device: "Oneplus Ace 3v",
     rom: "OxygenOS",
     version: "All",
-    image: "https://raw.githubusercontent.com/cato1412-dev/donate-onplus-vieos/refs/heads/main/img/trung.png",
+    image: "/donate-onplus-vieos/img/trung.png",
     title: "Thông tin Donate",
     description: `
       Ngân hàng: 108868096941 | TRAN DUC TRUNG | VIETINBANK<br>
@@ -17,7 +17,7 @@ const donateData = [
     device: "Oneplus Ace 3v",
     rom: "ColorOS",
     version: "All",
-    image: "https://raw.githubusercontent.com/cato1412-dev/donate-onplus-vieos/refs/heads/main/img/trung.png",
+    image: "/donate-onplus-vieos/img/trung.png",
     title: "Thông tin Donate",
     description: `
       Ngân hàng: 108868096941 | TRAN DUC TRUNG | VIETINBANK<br>
@@ -31,7 +31,7 @@ const donateData = [
     device: "Oneplus Ace 5",
     rom: "OxygenOS",
     version: "v1 - v8",
-    image: "https://raw.githubusercontent.com/cato1412-dev/donate-onplus-vieos/refs/heads/main/img/trung.png",
+    image: "/donate-onplus-vieos/img/trung.png",
     title: "Thông tin Donate",
     description: `
       Ngân hàng: 108868096941 | TRAN DUC TRUNG | VIETINBANK<br>
@@ -45,7 +45,7 @@ const donateData = [
     device: "Oneplus Ace 5",
     rom: "ColorOS",
     version: "v1",
-    image: "https://raw.githubusercontent.com/cato1412-dev/donate-onplus-vieos/refs/heads/main/img/moc.png",
+    image: "/donate-onplus-vieos/img/moc.png",
     title: "Thông tin Donate",
     description: `
       Sau khi quyên góp vui lòng liên hệ: <a href="https://t.me/jerryx0x" target="_blank" class="text-blue-500 underline">Mốc</a> 
