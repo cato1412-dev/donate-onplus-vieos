@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate Vieos Team</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Enable dark mode based on system preference
+    tailwind.config = {
+      darkMode: 'media',
+    }
+  </script>
+</head>
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen transition-colors">
+
+  <header class="text-center py-6 text-3xl font-bold">
+    Donate Vieos Team
+  </header>
+
+  <div class="flex flex-col items-center gap-4 px-4">
+    <select id="device-select" class="w-full max-w-sm px-4 py-2 rounded border dark:bg-gray-800 dark:border-gray-700">
+        <option value="">Thiết bị</option>
+    </select>
+    <select id="rom-select" class="w-full max-w-sm px-4 py-2 rounded border dark:bg-gray-800 dark:border-gray-700">
+        <option value="">ROM</option>
+    </select>
+    <select id="version-select" class="w-full max-w-sm px-4 py-2 rounded border dark:bg-gray-800 dark:border-gray-700">
+        <option value="">Version</option>
+    </select>
+    <button id="donate-button" class="w-full max-w-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">
+        Donate
+    </button>
+  </div>
+
+  <div id="box-container" class="mt-8 px-4 flex flex-wrap justify-center gap-6 "></div>
+
+  <!-- Image popup -->
+  <div id="image-popup" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+    <span id="popup-close" class="absolute top-4 right-6 text-white text-4xl cursor-pointer">&times;</span>
+    <img id="popup-img" class="max-w-[90%] max-h-[80%] rounded shadow-lg" />
+  </div>
+
+  <script src="data.js"></script>
+    <script>
+    const deviceSelect = document.getElementById('device-select');
+    const romSelect = document.getElementById('rom-select');
+    const versionSelect = document.getElementById('version-select');
+    const donateBtn = document.getElementById('donate-button');
+    const boxContainer = document.getElementById('box-container');
+
+    // Lấy danh sách thiết bị duy nhất
+    const devices = [...new Set(donateData.map(item => item.device))];
+    devices.forEach(dev => {
+        deviceSelect.innerHTML += `<option value="${dev}">${dev}</option>`;
+    });
+
+    // Reset các select phía sau khi có thay đổi
+    deviceSelect.addEventListener('change', () => {
+        const selectedDevice = deviceSelect.value;
+        romSelect.innerHTML = '<option value="">ROM</option>';
+        versionSelect.innerHTML = '<option value="">Version</option>';
+
+        if (!selectedDevice) return;
+
+        const filteredRoms = [...new Set(
+        donateData
+            .filter(item => item.device === selectedDevice)
+            .map(item => item.rom)
+        )];
+
+        filteredRoms.forEach(rom => {
+        romSelect.innerHTML += `<option value="${rom}">${rom}</option>`;
+        });
+    });
+
+    romSelect.addEventListener('change', () => {
+        const selectedDevice = deviceSelect.value;
+        const selectedRom = romSelect.value;
+        versionSelect.innerHTML = '<option value="">Version</option>';
+
+        if (!selectedDevice || !selectedRom) return;
+
+        const filteredVersions = [...new Set(
+        donateData
+            .filter(item => item.device === selectedDevice && item.rom === selectedRom)
+            .map(item => item.version)
+        )];
+
+        filteredVersions.forEach(ver => {
+        versionSelect.innerHTML += `<option value="${ver}">${ver}</option>`;
+        });
+    });
+
+    // Nút Donate hiển thị box tương ứng
+    donateBtn.onclick = () => {
+        const device = deviceSelect.value;
+        const rom = romSelect.value;
+        const version = versionSelect.value;
+
+        const filtered = donateData.filter(item =>
+        item.device === device &&
+        item.rom === rom &&
+        item.version === version
+        );
+
+        boxContainer.innerHTML = '';
+        if (filtered.length === 0) {
+        boxContainer.innerHTML = `<p class="text-center w-full">Không tìm thấy kết quả phù hợp.</p>`;
+        return;
+        }
+
+        filtered.forEach(item => {
+        const descHtml = item.description; // giữ nguyên HTML để hỗ trợ link
+        const box = document.createElement('div');
+        box.className = 'bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md p-4 w-full max-w-lg';
+        box.innerHTML = `
+        <img src="${item.image}" alt="${item.title}" class="w-full rounded cursor-zoom-in zoomable mb-3" />
+        <h3 class="text-center text-xl md:text-2xl font-bold mb-2">${item.title}</h3>
+        <p class="text-base md:text-lg leading-relaxed">${descHtml}</p>
+        `;
+        boxContainer.appendChild(box);
+        });
+    };
+
+    // Phóng to ảnh
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("zoomable")) {
+        document.getElementById("popup-img").src = e.target.src;
+        document.getElementById("image-popup").classList.remove("hidden");
+        document.getElementById("image-popup").classList.add("flex");
+        }
+    });
+
+    document.getElementById("popup-close").onclick = function () {
+        document.getElementById("image-popup").classList.add("hidden");
+        document.getElementById("popup-img").src = "";
+    };
+
+    document.getElementById("image-popup").onclick = function (e) {
+        if (e.target.id === "image-popup") {
+        document.getElementById("image-popup").classList.add("hidden");
+        document.getElementById("popup-img").src = "";
+        }
+    };
+    </script>
+</body>
+</html>
