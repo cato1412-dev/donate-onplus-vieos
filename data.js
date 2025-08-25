@@ -44,7 +44,7 @@ const donateData = [
   {
     device: "Oneplus Ace 5",
     rom: "OxygenOS",
-    version: "v9",
+    version: "v9 - Limited Edition",
     image: "/donate-onplus-vieos/img/moc.png",
     title: "Thông tin Donate",
     description: `
